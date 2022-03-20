@@ -9,6 +9,7 @@ import java.util.*;
  * Ability to add Hotel in a Hotel Reservation System with Name and rates for Regular Customer
  * Ability to find the cheapest Hotel for a given Date Range
  * I/P – 10Sep2020, 11Sep2020 - O/P – Lakewood, Total Rates: $220
+ * Ability to add weekday and weekend rates for each Hotel - For Lakewood Weekday
  */
 
 public class HotelReservationApplication {
