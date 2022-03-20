@@ -3,6 +3,7 @@ package com.bridgelabz;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Creating a HotelReservationApplication to print Welcome message
@@ -84,7 +85,7 @@ public class HotelReservationApplication {
                 printHotelInformation();
                 break;
             case 3:
-                printCheapestHotel();
+                readDatesAndPrintCheapestHotels();
                 break;
             default:
                 System.out.println("Invalid option. Please select valid");
@@ -98,32 +99,32 @@ public class HotelReservationApplication {
         hotelList.stream().forEach(System.out::println);
     }
 
+    public void readDatesAndPrintCheapestHotels() {
+        System.out.println("Enter date range");
+        String dateRange = scanner.next();
+        printCheapestHotel(dateRange);
+    }
+
     /**
      * Creating printCheapestHotel to print the cheapest hotel for the given date
      */
-    public void printCheapestHotel() {
-        System.out.println("Enter date range");
-        String dateRange = scanner.next();
-        double cheapHotelCost = 0.0;
-        Hotel cheapestHotel = null;
+    public List<Map.Entry<String, Double>> printCheapestHotel(String dateRange) {
         /**
-         * Using the split method to split the given date range by , deliminator
+         * create boolean list using dates which contains true if it is weekend, false otherwise
          */
-        for(String givenDate : dateRange.split(",")) {
-            if (this.isWeekend(givenDate)) {
-                //weekend
-                cheapestHotel = this.findCheapestHotel(true);
-                cheapHotelCost += cheapestHotel.getRegularWeekEndRate();
-            } else {
-                cheapestHotel = this.findCheapestHotel(false);
-                cheapHotelCost += cheapestHotel.getRegularWeekDayRate();
-            }
-        }
-        if (cheapestHotel != null) {
-            System.out.println("Cheapest hotel: " + cheapestHotel.getHotelName() + " and Total Cost: $" + cheapHotelCost);
-        } else {
-            System.out.println("Cheapest hotel not found!");
-        }
+        List<Boolean> dayTypeList = Arrays.stream(dateRange.split(",")).map(date -> isWeekend(date)).collect(Collectors.toList());
+
+        /**
+         * create a map using streams from available hotel list mapping hotel name as key and the total cost for given days as value
+         */
+        Map<String, Double> hotelMap = this.hotelList.stream().collect(Collectors.toMap(hotel -> hotel.getHotelName(), hotel -> dayTypeList.stream().map(dayType -> dayType ? hotel.getRegularWeekEndRate() : hotel.getRegularWeekDayRate()).reduce(Double::sum).get()));
+
+        /**
+         * print the cheapest hotel by comparing the cost of each hotel to min spend
+         */
+        List<Map.Entry<String, Double>> cheaphotels = hotelMap.entrySet().stream().filter(entrySet -> entrySet.getValue().doubleValue() == hotelMap.values().stream().min(Comparator.comparingDouble(Double::doubleValue)).get().doubleValue()).collect(Collectors.toList());
+        cheaphotels.stream().forEach(System.out::println);
+        return cheaphotels;
     }
 
     /**
@@ -142,13 +143,5 @@ public class HotelReservationApplication {
             e.printStackTrace();
         }
         return dayOfWeek1 == Calendar.SUNDAY || dayOfWeek1 == Calendar.SATURDAY;
-    }
-
-    /**
-     * Creating a findCheapestHotel to find the cheapest hotel by using stream method and comparator
-     * @return - the cheapest hotel
-     */
-    public Hotel findCheapestHotel(boolean isWeekend) {
-        return this.hotelList.stream().min(Comparator.comparingDouble(isWeekend ? Hotel::getRegularWeekEndRate : Hotel::getRegularWeekDayRate)).get();
     }
 }
