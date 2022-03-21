@@ -76,7 +76,8 @@ public class HotelReservationApplication {
      */
     public void readUserInput(Scanner scanner) {
         System.out.println("Please select one option: ");
-        System.out.println("1. Add Hotel Details\n2. Print Hotel Information\n3. Print Cheapest Hotel\n4. Add Rating to Hotel\n5. Print Cheapest Best Rated Hotel\n6. Print Best Rated Hotel");
+        System.out.println("1. Add Hotel Details\n2. Print Hotel Information\n3. Print Cheapest Hotel\n4. Add Rating to Hotel\n5. Print Cheapest Best Rated Hotel\n6. Print Best Rated Hotel" +
+                "\n7. Add Reward Rates to a Hotel");
         int option = scanner.nextInt();
         switch (option) {
             case 1:
@@ -96,6 +97,9 @@ public class HotelReservationApplication {
                 break;
             case 6:
                 findBestRatedHotel();
+                break;
+            case 7:
+                readUserInputAndAddRewardRates();
                 break;
             default:
                 System.out.println("Invalid option. Please select valid");
@@ -219,6 +223,37 @@ public class HotelReservationApplication {
         Hotel bestRatedHotel = this.hotelList.stream().max(Comparator.comparingInt(Hotel::getRating)).get();
         System.out.println("Best Rated hotel: "+bestRatedHotel.getHotelName()+", cost: $"+bestRatedHotel.getRegularWeekDayRate() + bestRatedHotel.getRegularWeekEndRate());
         return bestRatedHotel;
+    }
+
+    /**
+     * This method is to read hotel name and reward rates from user and update the same
+     */
+    public void readUserInputAndAddRewardRates() {
+        System.out.println("Enter hotel name");
+        String hotelName = scanner.next();
+        System.out.println("Enter Weekend Rate for reward customer");
+        double weekendRate = scanner.nextDouble();
+        System.out.println("Enter Weekday Rate for reward customer");
+        double weekDayRate = scanner.nextDouble();
+        addRewardRates(hotelName, weekDayRate, weekendRate);
+    }
+
+    /**
+     * This method takes hotel name and reward rates and updates
+     * @param hotelName
+     * @param weekDayRate
+     * @param weekendRate
+     * @return ture if the add is success, false otherwise
+     */
+    public boolean addRewardRates(String hotelName, double weekDayRate, double weekendRate) {
+        Optional<Hotel> giveHotel = this.hotelList.stream().filter(hotel -> hotel.getHotelName().equalsIgnoreCase(hotelName)).findFirst();
+        if (!giveHotel.isPresent()) {
+            return false;
+        } else {
+            giveHotel.get().setRewardWeekDayRate(weekDayRate);
+            giveHotel.get().setRewardWeekEndRate(weekendRate);
+            return true;
+        }
     }
 
 }

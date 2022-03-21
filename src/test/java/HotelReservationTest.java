@@ -76,4 +76,22 @@ public class HotelReservationTest {
         Hotel bestRatedHotel = hotelReservationApplication.findBestRatedHotel();
         Assertions.assertEquals(bestRatedHotel.getHotelName(), "Ridgewood");
     }
+
+    @Test
+    public void givenHotel_whenHotelIsLakewood_ShouldReturnTrue() {
+        hotelReservationApplication.hotelList.add(new Hotel("Lakewood", 3, 110.00, 90.00));
+        hotelReservationApplication.hotelList.add(new Hotel("Bridgewood", 4, 150.00, 50.00));
+        hotelReservationApplication.hotelList.add(new Hotel("Ridgewood", 5, 220.00, 150.00));
+        boolean isSuccess = hotelReservationApplication.addRewardRates("Lakewood", 80.00, 80.00);
+        Assertions.assertEquals(isSuccess, true);
+    }
+
+    @Test
+    public void givenHotel_whenHotelIsUnknown_ShouldReturnFalse() {
+        hotelReservationApplication.hotelList.add(new Hotel("Lakewood", 3, 110.00, 90.00));
+        hotelReservationApplication.hotelList.add(new Hotel("Bridgewood", 4, 150.00, 50.00));
+        hotelReservationApplication.hotelList.add(new Hotel("Ridgewood", 5, 220.00, 150.00));
+        boolean isSuccess = hotelReservationApplication.addRewardRates("ABC", 80.00, 80.00);
+        Assertions.assertEquals(isSuccess, false);
+    }
 }
