@@ -59,4 +59,12 @@ public class HotelReservationTest {
         boolean isUpdated = hotelReservationApplication.addRating("UnKnownHotel", 4);
         Assertions.assertEquals(isUpdated, false);
     }
+
+    @Test
+    public void givenDates_whenWeekDayAndWeekEnd_ShouldReturnBestRatedAsBridgewood() {
+        hotelReservationApplication.hotelList.add(new Hotel("Lakewood", 3, 110.00, 90.00));
+        hotelReservationApplication.hotelList.add(new Hotel("Bridgewood", 4, 150.00, 50.00));
+        Hotel cheapestBestRatedHotel = hotelReservationApplication.findCheapestBestRatedHotel("11Sep2020,12Sep2020");
+        Assertions.assertEquals(cheapestBestRatedHotel.getHotelName(), "Bridgewood");
+    }
 }
