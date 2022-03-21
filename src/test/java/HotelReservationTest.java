@@ -45,7 +45,7 @@ public class HotelReservationTest {
     }
 
     @Test
-    public void givenHotelAndRating_whendValidHotelName_ShouldReturnTrue() {
+    public void givenHotelAndRating_whenValidHotelName_ShouldReturnTrue() {
         hotelReservationApplication.hotelList.add(new Hotel("Lakewood", 3, 110.00, 90.00));
         hotelReservationApplication.hotelList.add(new Hotel("Bridgewood", 4, 150.00, 50.00));
         boolean isUpdated = hotelReservationApplication.addRating("Lakewood", 4);
@@ -53,7 +53,7 @@ public class HotelReservationTest {
     }
 
     @Test
-    public void givenHotelAndRating_whendInValidHotelName_ShouldReturnFalse() {
+    public void givenHotelAndRating_whenInValidHotelName_ShouldReturnFalse() {
         hotelReservationApplication.hotelList.add(new Hotel("Lakewood", 3, 110.00, 90.00));
         hotelReservationApplication.hotelList.add(new Hotel("Bridgewood", 4, 150.00, 50.00));
         boolean isUpdated = hotelReservationApplication.addRating("UnKnownHotel", 4);
@@ -66,5 +66,14 @@ public class HotelReservationTest {
         hotelReservationApplication.hotelList.add(new Hotel("Bridgewood", 4, 150.00, 50.00));
         Hotel cheapestBestRatedHotel = hotelReservationApplication.findCheapestBestRatedHotel("11Sep2020,12Sep2020");
         Assertions.assertEquals(cheapestBestRatedHotel.getHotelName(), "Bridgewood");
+    }
+
+    @Test
+    public void whenFindingBestRatedHotel_ShouldReturnRidgewood() {
+        hotelReservationApplication.hotelList.add(new Hotel("Lakewood", 3, 110.00, 90.00));
+        hotelReservationApplication.hotelList.add(new Hotel("Bridgewood", 4, 150.00, 50.00));
+        hotelReservationApplication.hotelList.add(new Hotel("Ridgewood", 5, 220.00, 150.00));
+        Hotel bestRatedHotel = hotelReservationApplication.findBestRatedHotel();
+        Assertions.assertEquals(bestRatedHotel.getHotelName(), "Ridgewood");
     }
 }
