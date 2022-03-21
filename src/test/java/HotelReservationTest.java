@@ -43,4 +43,20 @@ public class HotelReservationTest {
         Assertions.assertEquals(result.get(0).getKey(), "Bridgewood");
         Assertions.assertEquals(result.get(1).getKey(), "Lakewood");
     }
+
+    @Test
+    public void givenHotelAndRating_whendValidHotelName_ShouldReturnTrue() {
+        hotelReservationApplication.hotelList.add(new Hotel("Lakewood", 3, 110.00, 90.00));
+        hotelReservationApplication.hotelList.add(new Hotel("Bridgewood", 4, 150.00, 50.00));
+        boolean isUpdated = hotelReservationApplication.addRating("Lakewood", 4);
+        Assertions.assertEquals(isUpdated, true);
+    }
+
+    @Test
+    public void givenHotelAndRating_whendInValidHotelName_ShouldReturnFalse() {
+        hotelReservationApplication.hotelList.add(new Hotel("Lakewood", 3, 110.00, 90.00));
+        hotelReservationApplication.hotelList.add(new Hotel("Bridgewood", 4, 150.00, 50.00));
+        boolean isUpdated = hotelReservationApplication.addRating("UnKnownHotel", 4);
+        Assertions.assertEquals(isUpdated, false);
+    }
 }

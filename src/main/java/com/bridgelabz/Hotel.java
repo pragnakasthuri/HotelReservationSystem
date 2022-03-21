@@ -1,7 +1,7 @@
 package com.bridgelabz;
 
 /**
- * Creating a Hotel Class which contains Hotel name, rating, regularWeekDayRate, regularWeekEndRate
+ * Creating a Hotel Class which contains Hotel name, rating, regularWeekDayRates, regularWeekEndRates
  * as instance variables
  */
 public class Hotel {

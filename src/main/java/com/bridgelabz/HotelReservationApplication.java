@@ -10,7 +10,8 @@ import java.util.stream.Collectors;
  * Ability to add Hotel in a Hotel Reservation System with Name and rates for Regular Customer
  * Ability to find the cheapest Hotel for a given Date Range
  * I/P – 10Sep2020, 11Sep2020 - O/P – Lakewood, Total Rates: $220
- * Ability to add weekday and weekend rates for each Hotel - For Lakewood Weekday
+ * Ability to add weekday and weekend rates for each Hotel
+ * Ability to add ratings to each hotel
  */
 
 public class HotelReservationApplication {
@@ -75,7 +76,7 @@ public class HotelReservationApplication {
      */
     public void readUserInput(Scanner scanner) {
         System.out.println("Please select one option: ");
-        System.out.println("1. Add Hotel Details\n2. Print Hotel Information\n3. Print Cheapest Hotel");
+        System.out.println("1. Add Hotel Details\n2. Print Hotel Information\n3. Print Cheapest Hotel\n4. Add Rating to Hotel");
         int option = scanner.nextInt();
         switch (option) {
             case 1:
@@ -86,6 +87,9 @@ public class HotelReservationApplication {
                 break;
             case 3:
                 readDatesAndPrintCheapestHotels();
+                break;
+            case 4:
+                addRatingByTakingInputFromUser();
                 break;
             default:
                 System.out.println("Invalid option. Please select valid");
@@ -143,5 +147,31 @@ public class HotelReservationApplication {
             e.printStackTrace();
         }
         return dayOfWeek1 == Calendar.SUNDAY || dayOfWeek1 == Calendar.SATURDAY;
+    }
+
+    /**
+     * This method willl take input from user and update the hotel rating
+     */
+    public void addRatingByTakingInputFromUser() {
+        System.out.println("Enter hotel name");
+        String hotelName = scanner.next();
+        System.out.println("Enter rating");
+        int rating = scanner.nextInt();
+        addRating(hotelName, rating);
+    }
+
+    /**
+     * This method will filter the hotels from hotel list based on given name and update its rating
+     * @param hotelName
+     * @param rating
+     */
+    public boolean addRating(String hotelName, int rating) {
+        List<Hotel> hotels = this.hotelList.stream().filter(hotel -> hotel.getHotelName().equalsIgnoreCase(hotelName)).collect(Collectors.toList());
+        if (hotels.isEmpty()) {
+            return false;
+        } else {
+            hotels.stream().forEach(hotel -> hotel.setRating(rating));
+            return true;
+        }
     }
 }
