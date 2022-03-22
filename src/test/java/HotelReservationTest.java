@@ -145,7 +145,7 @@ public class HotelReservationTest {
 
     @Test
     public void givenHotelWeekEndRate_WhenProper_ShouldReturnTrue() {
-        boolean result = HotelRegistrationValidationUtil.isValidWeekEndRate(1800.0);
+        boolean result = HotelRegistrationValidationUtil.isValidWeekEndRate(180.0);
         Assertions.assertEquals(true, result);
     }
 
