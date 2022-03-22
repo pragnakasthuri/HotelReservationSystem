@@ -1,5 +1,8 @@
 package com.bridgelabz;
 
+/**
+ * Creating HotelRegistrationValidationUtil for validating the hotel details
+ */
 public class HotelRegistrationValidationUtil {
 
     public static boolean isValidHotelName(String hotelName) {

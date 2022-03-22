@@ -183,8 +183,8 @@ public class HotelReservationApplication {
 
     /**
      * This method will filter the hotels from hotel list based on given name and update its rating
-     * @param hotelName
-     * @param rating
+     * @param hotelName - name of the hotel
+     * @param rating - hotel rating
      */
     public boolean addRating(String hotelName, int rating) {
         List<Hotel> hotels = this.hotelList.stream().filter(hotel -> hotel.getHotelName().equalsIgnoreCase(hotelName)).collect(Collectors.toList());
