@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
  * Find Cheapest best rated hotel
  * Adding rates for reward customer
  * Regex for validating
+ * Finding the cheapest best rated hotel for regular customer
+ * Finding the cheapest best rated hotel for reward customer
  */
 
 public class HotelReservationApplication {

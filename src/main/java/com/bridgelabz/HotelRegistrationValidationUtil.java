@@ -1,7 +1,7 @@
 package com.bridgelabz;
 
 /**
- * Creating HotelRegistrationValidationUtil for validating the hotel details
+ * Creating HotelRegistrationValidationUtil class for validating the hotel details
  */
 public class HotelRegistrationValidationUtil {
 
