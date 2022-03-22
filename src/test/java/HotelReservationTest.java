@@ -1,4 +1,5 @@
 import com.bridgelabz.Hotel;
+import com.bridgelabz.HotelRegistrationValidationUtil;
 import com.bridgelabz.HotelReservationApplication;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -105,5 +106,52 @@ public class HotelReservationTest {
         hotelReservationApplication.addRewardRates("Ridgewood", 100.00, 40.00);
         Hotel cheapestBestRatedHotel = hotelReservationApplication.findCheapestBestRatedHotel("11Sep2020,12Sep2020", false);
         Assertions.assertEquals(cheapestBestRatedHotel.getHotelName(), "Ridgewood");
+    }
+    @Test
+    public void givenHotelName_WhenProper_ShouldReturnTrue() {
+        boolean result = HotelRegistrationValidationUtil.isValidHotelName("Lakewood");
+        Assertions.assertEquals(true, result);
+    }
+
+    @Test
+    public void givenHotelName_WhenNotProper_ShouldReturnFalse() {
+        boolean result = HotelRegistrationValidationUtil.isValidHotelName("lakewood");
+        Assertions.assertEquals(false, result);
+    }
+
+    @Test
+    public void givenHotelRating_WhenProper_ShouldReturnTrue() {
+        boolean result = HotelRegistrationValidationUtil.isValidHotelRating(5);
+        Assertions.assertEquals(true, result);
+    }
+
+    @Test
+    public void givenHotelRating_WhenNotProper_ShouldReturnFalse() {
+        boolean result = HotelRegistrationValidationUtil.isValidHotelRating(578);
+        Assertions.assertEquals(false, result);
+    }
+
+    @Test
+    public void givenHotelWeekDayRate_WhenProper_ShouldReturnTrue() {
+        boolean result = HotelRegistrationValidationUtil.isValidWeekDayRate(110.0);
+        Assertions.assertEquals(true, result);
+    }
+
+    @Test
+    public void givenHotelWeekDayRate_WhenNotProper_ShouldReturnFalse() {
+        boolean result = HotelRegistrationValidationUtil.isValidWeekDayRate(000.0);
+        Assertions.assertEquals(false, result);
+    }
+
+    @Test
+    public void givenHotelWeekEndRate_WhenProper_ShouldReturnTrue() {
+        boolean result = HotelRegistrationValidationUtil.isValidWeekEndRate(1800.0);
+        Assertions.assertEquals(true, result);
+    }
+
+    @Test
+    public void givenHotelWeekEndRate_WhenNotProper_ShouldReturnFalse() {
+        boolean result = HotelRegistrationValidationUtil.isValidWeekEndRate(000.0);
+        Assertions.assertEquals(false, result);
     }
 }
