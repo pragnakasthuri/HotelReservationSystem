@@ -12,6 +12,9 @@ import java.util.stream.Collectors;
  * I/P – 10Sep2020, 11Sep2020 - O/P – Lakewood, Total Rates: $220
  * Ability to add weekday and weekend rates for each Hotel
  * Ability to add ratings to each hotel
+ * Find Cheapest best rated hotel
+ * Adding rates for reward customer
+ * Regex for validating
  */
 
 public class HotelReservationApplication {
@@ -51,15 +54,20 @@ public class HotelReservationApplication {
     public void readHotelDetails() {
         System.out.println("Please enter the Hotel Name: ");
         String hotelName = scanner.next();
+        System.out.println(HotelRegistrationValidationUtil.isValidHotelName(hotelName) ? "Valid" : "InValid");
 
         System.out.println("Please enter the rating: ");
         int rating = scanner.nextInt();
+        System.out.println(HotelRegistrationValidationUtil.isValidHotelRating(rating) ? "Valid" : "InValid");
 
         System.out.println("Please enter the weekday rate for regular customer: ");
         double weekDayRate = scanner.nextDouble();
+        System.out.println(HotelRegistrationValidationUtil.isValidWeekDayRate(weekDayRate) ? "Valid" : "InValid");
 
         System.out.println("Please enter the weekend rate for regular customer: ");
         double weekEndRate = scanner.nextDouble();
+        System.out.println(HotelRegistrationValidationUtil.isValidWeekEndRate(weekEndRate) ? "Valid" : "InValid");
+
         /**
          * Creating a Hotel object and adding all the details into hotelList
          */
@@ -69,6 +77,7 @@ public class HotelReservationApplication {
     public boolean addHotel(Hotel hotel) {
         return this.hotelList.add(hotel);
     }
+
 
     /**
      * Creating readUserInput to read input from the user and continue according to it
@@ -162,7 +171,7 @@ public class HotelReservationApplication {
     }
 
     /**
-     * This method willl take input from user and update the hotel rating
+     * This method will take input from user and update the hotel rating
      */
     public void addRatingByTakingInputFromUser() {
         System.out.println("Enter hotel name");
